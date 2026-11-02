@@ -1,0 +1,10 @@
+{
+  "description": "用直观的演示动画讲解 SEO 原理与优化流程，帮助编程初学者轻松理解搜索引擎如何发现、收录和排名网页。",
+  "robots": {
+    "index": false
+  },
+  "accessibility": {
+    "addBypassLinks": false,
+    "ignoreReducedMotion": false
+  }
+}
