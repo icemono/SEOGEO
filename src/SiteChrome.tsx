@@ -1,0 +1,4 @@
+export function SiteHeader({demo=false}:{demo?:boolean}){
+ return <header className="pix-header page-width"><a className="pix-brand" href="/" aria-label="SEOGEO 首页"><span className="brand-block">S</span><span>SEOGEO<small>.dev</small></span></a><nav aria-label="网站导航"><a href="/#concepts">认识三个概念</a><a href="/learn/seo/">实操指南</a><a href="https://github.com/icemono/SEOGEO" target="_blank" rel="noreferrer">GitHub <span aria-hidden="true">↗</span></a><a className="nav-play" href={demo?'/':'/demo/'}>{demo?'返回首页':'进入演示'} <span aria-hidden="true">→</span></a></nav></header>
+}
+export function SiteFooter(){return <footer className="pix-footer page-width"><a className="pix-brand" href="/"><span className="brand-block">S</span><span>SEOGEO<small>.dev</small></span></a><p>为开发者讲清发现的原理。<br/><span>学会原理，然后让你的作品走得更远。</span></p><a href="/demo/">再去冒险 →</a></footer>}

@@ -1,40 +1,35 @@
-# 2026-11-02 validation
+# 2026-11-02 — pixel style restoration and dedicated demo
 
-## Scope
+## Current scope and baseline
 
-Official site for developers starting with SEO, ASO and GEO. Retains the original three-topic interactive learning scope and adds actionable examples, complete text lessons, comparison, checklists, FAQ and primary sources.
+The user rejected the white/green documentation workbench and selected the original GitHub pixel adventure look. The visual baseline is `6453c00`, not the rejected generated concepts.
 
-## Automated evidence
+Homepage `/` introduces three concepts and provides entry points. `/demo/` is the dedicated interactive page, with `/demo/seo/`, `/demo/aso/`, `/demo/geo/` for topic entry. Existing `/learn/*/` routes provide the longer explanations, code, terms and developer checklists in the same brand system.
 
-- `npm run build`: TypeScript, Vite client build, server build and prerender passed.
-- Four static documents contain the lesson text, exactly one H1, correct canonical URLs, and no indexing-blocking robots meta.
-- `wrangler deploy --dry-run` passed for assets-only deployment.
-- Client JavaScript ~85 KB gzip, CSS ~6.6 KB gzip. No external font, analytics or model service dependency.
+## Implementation
 
-## Browser evidence
+- Restored original three themed skies, CSS robot, cloud, coins, brick stages, hills, pipe, ground and game HUD. Isolated original CSS under `.demo-page`.
+- Moved homepage explanation and long reading material outside the demo playfield.
+- Added mobile scene layout; only the stage map scrolls horizontally. Active stages are centered as the user advances.
+- Kept local simulated query/results. Added empty-input guidance and keyboard arrow switching for topic tabs. No real search/model requests.
+- Retained concept corrections, including platform-dependent ASO mechanisms and GEO's retrieval premise and citation limits.
+- Hosted original display fonts locally: Press Start 2P (~7 KB WOFF2), ZCOOL KuaiLe (~73 KB WOFF2), with their OFL license files. No external font runtime dependency.
+- Eight pre-rendered documents have per-route titles, descriptions, canonical, JSON-LD and matching CSP hashes. Sitemap is generated from the page inventory.
 
-Codex in-app browser / cua_repl was used (no external Playwright fallback). Checked ~1200×1312 desktop, ~389×843 mobile; DOM confirmed mobile scrollWidth equals viewport width. IAB screenshot output included blank overscan outside the actual CSS viewport; screenshot review trimmed only that blank overscan. The desktop concept is 1199×1312; native size was matched to within 1 CSS pixel. All 24 learning steps rendered their expected headings. Custom GEO query propagated through retrieval, generation and citation states. ASO code copy, checklist Markdown copy, checkbox persistence after reload, topic isolation, reset, and native FAQ expansion were checked. Console had no errors or warnings during checked flows. Online HTTPS page loaded in IAB.
+## Verification
 
-## Visual comparison ledger
+`npm run check` passed: TypeScript, Vite client/SSR builds, eight prerendered pages, one H1 per page, internal links and assets, metadata/canonical/schema URLs, eight stages or eight guide lessons, sitemap entries, CSP hashes, real local WOFF2 files and JPEG sharing image. `git diff --check` is also required before pushing.
 
-The concept references are retained locally at `docs/design/learning-concept.png` and `docs/design/continuation-concept.png`. They are design evidence, not site runtime assets.
+Browser checks use Codex IAB and Chrome through cua_repl. Desktop and 389px mobile were checked. All 24 demo stages rendered the expected title. Mobile custom GEO question propagated through the flow to the result; expanding the result clearly states no real references were generated. Empty query showed its guidance. DOM confirmed no whole-page horizontal overflow on mobile; the stage map is intentionally wider than the viewport.
 
-| Comparison | Review and disposition |
-| --- | --- |
-| Hero copy and navigation | Exact hero heading, description, CTA and primary navigation retained. Pipeline wording intentionally changed to publish / discover / connect for semantic accuracy. |
-| Palette | White, forest green #24694f, pale sage and quiet borders implemented. No tinted hero overlay or raster UI. |
-| Container and rhythm | Fixed Tailwind container max-width collision; aligned header, hero, workbench and downstream content to 1120px grid. |
-| Typography | Deliberate system Chinese sans and monospace technical text. Desktop hero enlarged to 52px to match reference hierarchy; mobile scales down independently. |
-| Workbench | Tabs, numbered rail, code panel and bottom actions follow reference. Extra caveats, terminology and phase labels intentionally support beginner accuracy. Full HTML example expands the first lesson beyond the compressed concept. |
-| Continuation | Table, checklist rows, FAQ and primary source links follow shared design system. Explicit definitions and source section added for educational clarity. |
-| Icons and mobile | Consistent 1.7px outline SVG icons. Mobile uses horizontal step rail and scrollable comparison table without page overflow. |
+The original palette, robot geometry, sky/background objects, three-dimensional brick edges, display fonts and bottom controls were visually compared against the original code. Intentional differences: shared site navigation, dedicated demo route, legible body text, phase-label positioning, bounded desktop height, and responsive mobile layout. Homepage extends the same scene into a landing page and three topic cartridges. No generic workbench panels remain in the main experience.
 
-Above-the-fold copy review: primary headline, description, navigation and CTA match the concept; diagram captions are intentional explanatory additions. No unplanned promotional claims. The concept and implementation were both inspected using view_image; known adaptations above are intentional. Screenshot evidence remains local and untracked.
+## Production and search boundary
 
-## Content sources
+Cloudflare Workers static hosting remains the deployment target. The canonical www → apex redirect is configured in zone ruleset `94ee685fa9a5469cb2cbe0b38b85d25a` and retains path/query; root and nested query cases returned 301.
 
-Verified Google SEO Starter Guide, AI features and AI optimization guidance; Apple product page guidance; OpenAI crawler documentation; original GEO paper. No universal ranking formula or citation guarantee is presented. Check platform originals before future edits.
+**Google Search submission is paused at the user's request.** One TXT ownership-verification record was added before that instruction. The Verify button was not pressed, Sitemap was not submitted, and no indexing request was made. Do not treat that DNS record as verified ownership or indexing evidence.
 
-## Release boundary
+Git automatic production deployment is not configured. Publish with the documented Wrangler command using the existing login. No API tokens or additional GitHub permissions were created for CI.
 
-Deployed to Cloudflare Workers and custom domains. Deployment, browser verification, search indexing and real user acceptance are distinct. Search Console verification/submission, index inclusion and third-party AI citations remain unverified. Automatic Git deployment is not configured because the Pages Git installation API returned an installation error; manual Wrangler deployment is documented.
+Final browser checks also confirmed automatic playback pauses at stage 5 for user input, mobile active-stage visibility, keyboard topic switching, guide navigation and checklist persistence after reload. Production `/demo/` loaded over HTTPS; a custom GEO question reached the result panel, with no console errors or warnings in the checked flow. Final desktop scene was checked at 1280×900; mobile page widths of 389px and 358px showed no page-wide overflow.

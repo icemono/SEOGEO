@@ -1,54 +1,47 @@
 # SEOGEO.dev
 
-面向开发者的 SEO、ASO 与 GEO 零基础交互指南。
+用像素冒险，给开发者讲清 SEO、ASO 与 GEO。
 
-线上网站：https://seogeo.dev/
+- 官网：https://seogeo.dev/
+- 独立演示：https://seogeo.dev/demo/
+- 主题入口：`/demo/seo/`、`/demo/aso/`、`/demo/geo/`
+- 实操指南：`/learn/seo/`、`/learn/aso/`、`/learn/geo/`
 
-## 内容与功能
+## 设计与内容边界
 
-- SEO、ASO、GEO 各 8 步：通俗解释、开发者行动、示例代码、术语与机制边界。
-- 自定义本地模拟提问，不请求搜索或 AI API。
-- 主题概念对照、完整文字版、FAQ 与一手资料链接。
-- 三组上线清单，浏览器本地保存，支持复制 Markdown 或下载兜底。
-- 响应式布局、键盘操作、减少动态效果支持；不加载外部字体或分析脚本。
+视觉以最初 GitHub 提交 `6453c00` 为基准：保留蓝天、云朵、金币、砖块、管道和像素机器人。首页负责概念与学习入口，独立演示页保留原版三主题、八关流程、播放/暂停、自定义问题与模拟结果；长解释、代码和检查清单放在指南页。
 
-## 本地开发
+内容面向零基础开发者，区分发现、抓取、索引、排序、转化、检索与训练。不发起真实搜索或模型请求，不承诺排名、收录或 AI 引用。Google Search 提交按用户要求暂停：TXT 验证记录已添加，但未点击所有权验证、未提交 Sitemap，也未申请收录。
 
-Node.js 22.12+（或当前 Vite 支持的更高版本）。
+## 开发与发布
+
+使用 Node.js 22.12+（或 Vite 支持的更新版本）。
 
 ```sh
 npm ci
 npm run dev
+npm run check
+npm run preview
 ```
 
-默认地址见 Vite 输出。生产预览使用 `npm run build && npm run preview`。
-
-## 构建
-
-```sh
-npm run build
-```
-
-TypeScript 检查后构建客户端，使用 React 服务端渲染生成首页和 `/learn/seo/`、`/learn/aso/`、`/learn/geo/` 的完整静态 HTML，再在浏览器中 hydrate。主要内容和完整文字课程无需等待 JavaScript 才能被读取。未实现真实搜索、任意网站诊断或模型调用。
-
-## 部署到 Cloudflare
+`npm run check` 包含 TypeScript、客户端/SSR 构建、八个静态页面生成，以及 H1、canonical、元数据、站内链接、CSP、Sitemap 和本地字体校验。
 
 ```sh
 npx wrangler login
 npm run deploy
 ```
 
-`wrangler.jsonc` 配置 Workers 静态托管，绑定 `seogeo.dev` 和 `www.seogeo.dev`，采用真实 404 页面。主站规范地址为 `https://seogeo.dev/`。登录凭据由 Wrangler 管理，不在仓库保存。
+Cloudflare Workers 静态托管，配置位于 `wrangler.jsonc`。当前使用直接部署，未配置 Git 自动发布；凭据不保存在仓库。Cloudflare 域名重定向规则将 `www.seogeo.dev` 以 301 跳转至 `seogeo.dev`，保留路径与查询参数。404 为真实错误响应。
 
-本次通过直接上传部署。Cloudflare Pages 的 Git 安装返回异常，未配置 Git 推送自动部署；后续改动需运行上面的部署命令。
+## 文件入口
 
-## 编辑入口
+- `src/Home.tsx`：像素风首页。
+- `src/demo/Demo.tsx`、`src/demo/original.css`：从原版源码恢复并隔离作用域的闯关演示，含手机适配。
+- `src/PixelArt.tsx`、`src/SiteChrome.tsx`：共享角色、像素场景、导航与页脚。
+- `src/Guide.tsx`、`src/content.ts`：实操教程、一手来源与清单。
+- `src/Checklist.tsx`：本地勾选保存与 Markdown 导出。
+- `src/pages.ts`：页面清单和元数据。
+- `scripts/prerender.mjs`：生成正文 HTML、JSON-LD、CSP hashes 与 Sitemap。
+- `scripts/check-build.mjs`：检查最终发布文件。
 
-- `src/content.ts`：课程、清单、FAQ、引用。
-- `src/Workbench.tsx`：学习交互。
-- `src/Checklist.tsx`：清单和浏览器本地状态。
-- `src/App.tsx`、`src/index.css`：页面与视觉系统。
-- `scripts/prerender.mjs`：静态页面生成。
-- `public/robots.txt`、`public/sitemap.xml`、`public/_headers`：爬虫与响应策略。
-
-代码与内容已上线不等于搜索引擎已收录或 AI 已引用。Search Console 所有权验证和搜索提交未在本次任务中执行。
+Press Start 2P 与 ZCOOL KuaiLe 来自 Google Fonts，按 OFL 授权本地托管；授权文件见 `public/fonts/`。仅本地保存清单，不加载外部字体、分析或 AI 脚本。

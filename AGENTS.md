@@ -1,37 +1,39 @@
-# figma-make-app
+# SEOGEO.dev
 
-React + Vite + Tailwind CSS project running inside Figma Make.
+React 19 + Vite 8 + TypeScript + Tailwind CSS v4 educational site. Production is on Cloudflare Workers static assets; source is icemono/SEOGEO, main branch. This checkout is the canonical source, independent of Figma Make.
 
-## Development Server
+## Product
 
-A Vite development server is **already running** on `$PORT` (default 8443). You don't need to start it manually.
+Teach SEO, ASO and GEO to developers with no prior search-marketing knowledge. Explain mechanisms, examples, actionable steps and limits in simple Chinese. Keep live search, local simulations, search indexing and AI citations distinct. Do not introduce ranking scores, guarantees, fabricated statistics, or imply that llms.txt is a universal requirement. Prefer primary sources for platform claims.
 
-- Preview URL: The user can access the running app through the preview panel
-- Hot reload: Changes to source files are reflected immediately
+## Development and verification
 
-## Project Structure
+- `npm ci`, then `npm run dev`. Read the actual Vite output for the current port; do not assume a server is running.
+- `npm run check`: TypeScript, client/SSR build, static prerender and generated-output checks.
+- `npm run preview` serves the static production build. Reload after a rebuild.
+- `npm run deploy`: build and deploy using Wrangler's existing login. Never store login credentials in source.
+- Git automatic deployment is not configured. Keep local publication checks available through `npm run check`.
+- Keep generated QA screenshots and local design reference PNGs untracked. The sharing image is tracked directly and must not become an LFS pointer.
 
-This is the canonical project structure. Start with task-relevant files below. Only follow imports or inspect other files when required, when a documented path is missing, or when the repository contradicts this guide.
+## Structure
 
-- `src/main.tsx` - React entrypoint; imports `src/index.css` and mounts `src/App.tsx` into the `#root` element
-- `src/App.tsx` - Primary application component and the usual starting point for UI work
-- `src/index.css` - Global CSS entrypoint and Tailwind CSS v4 import
-- `index.html` - Vite HTML shell containing the `#root` element and loading `src/main.tsx`
-- `package.json` - Project dependencies and the Vite build, development, preview, and formatting scripts
-- `vite.config.ts` - Vite configuration with React, Tailwind CSS v4, and Figma Make plugins plus the `@` alias for `src`
-- `.mise.toml` - Toolchain versions for Node.js and pnpm
+- `src/content.ts`: lessons, terms, checklists, FAQ and source links.
+- `src/pages.ts`: route titles/descriptions and page inventory.
+- `src/Workbench.tsx`: shared accessible topic tabs for the checklist.
+- `src/Checklist.tsx`: local checkbox state and export.
+- `src/App.tsx`: route composition. `src/Home.tsx`, `src/Guide.tsx`, `src/demo/Demo.tsx`: page surfaces. `src/index.css`: shared design system.
+- `src/entry-server.tsx`, `src/main.tsx`: SSR and client hydration. Initial render must match on both sides.
+- `scripts/prerender.mjs`: full static HTML, route metadata/schema, CSP hashes and sitemap.
+- `scripts/check-build.mjs`: verifies generated publication output.
+- `public/_headers`: security/cache template. Inline JSON-LD CSP hashes are injected during the build.
+- `wrangler.jsonc`: Worker name, account, assets and custom domains.
 
-## Dependencies
+## Visual baseline
 
-- Runtime: React 19 and React DOM 19
-- Styling: Tailwind CSS v4 with the `@tailwindcss/vite` plugin
-- Build tooling: Vite 8, TypeScript 5.7, and `@vitejs/plugin-react`
-- Formatting: oxfmt
+The user explicitly rejected the white/green documentation-workbench redesign. Preserve the original GitHub pixel adventure style from commit `6453c00`: navy #151d38, blue skies, yellow #ffdc4c, brick blocks, clouds, hills, pipe and CSS pixel robot. Chinese display font ZCOOL KuaiLe; English pixel labels Press Start 2P, both hosted locally with OFL licenses. Do not substitute a generic documentation/dashboard layout. Homepage introduces concepts; `/demo/` is the dedicated interactive scene. Reading guides live at `/learn/*/` and share the pixel brand.
 
-## Styling
+`src/demo/original.css` scopes the original scene to `.demo-page`; appended refinements handle mobile. `src/index.css` owns the site shell, home and guide styles. Avoid selector collisions between site chrome, checklist tabs and game HUD. Verify desktop and 390px mobile, with horizontal scrolling limited to the game map. Respect reduced motion.
 
-This project uses **Tailwind CSS v4** through the `@tailwindcss/vite` plugin configured in `vite.config.ts`. `src/index.css` imports Tailwind with `@import 'tailwindcss';`. Use Tailwind utility classes directly in JSX and put global CSS or Tailwind v4 theme customization in `src/index.css`. This scaffold does not need a Tailwind config file or PostCSS config.
+## Operational boundaries
 
-`src/main.tsx` imports `src/index.css`, so global font wiring belongs in `src/index.css`. Keep CSS `@import` statements first, then add any `@font-face` rules and font-family defaults there.
-
-Tailwind emits utility classes in `@layer utilities`, and CSS outside any cascade layer overrides every layer regardless of specificity. Put global element styles, such as resets and defaults for `body`, headings, `button`, or `input`, inside `@layer base { ... }` so utility classes on those elements still apply. Tailwind's Preflight already applies `box-sizing: border-box`, removes default margins, and sets `font: inherit` on form controls, so do not repeat those rules.
+Canonical host: https://seogeo.dev/. Cloudflare zone redirect sends www to the canonical host while retaining path/query. The user explicitly paused Google Search submission. A TXT verification record exists, but ownership verification, Sitemap submission and indexing requests must not be performed until the user resumes that work. A deployment or sitemap submission is not evidence of indexing. Git build validation is not automatic production deployment. See README and docs/validation.md for the current verified boundary.

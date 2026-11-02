@@ -1,11 +1,11 @@
 import { StrictMode } from 'react'
 import { createRoot, hydrateRoot } from 'react-dom/client'
 import App from './App'
-import type { Mode } from './content'
+import {pages} from './pages'
 import './index.css'
 const root=document.getElementById('root')!
-const route=location.pathname.match(/^\/learn\/(seo|aso|geo)\/?$/)?.[1]
-const mode=(route?.toUpperCase()||'SEO') as Mode
-const app=<StrictMode><App initialMode={mode}/></StrictMode>
+const path=location.pathname.replace(/^\/+|\/+$/g,'')
+const page=pages.find(p=>p.path===path)||pages[0]
+const app=<StrictMode><App page={page}/></StrictMode>
 if(root.hasChildNodes())hydrateRoot(root,app)
 else createRoot(root).render(app)

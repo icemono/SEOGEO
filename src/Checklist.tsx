@@ -2,8 +2,8 @@ import {useEffect,useState} from 'react'
 import {checks,courses,type Mode} from './content'
 import {ModeTabs} from './Workbench'
 import {Icon} from './icons'
-export function Checklist(){
- const [mode,setMode]=useState<Mode>('SEO'),[done,setDone]=useState<Record<string,boolean>>({}),[ready,setReady]=useState(false),[message,setMessage]=useState('')
+export function Checklist({initialMode='SEO'}:{initialMode?:Mode}){
+ const [mode,setMode]=useState<Mode>(initialMode),[done,setDone]=useState<Record<string,boolean>>({}),[ready,setReady]=useState(false),[message,setMessage]=useState('')
  useEffect(()=>{try{const saved=JSON.parse(localStorage.getItem('seogeo-checklist-v1')||'{}');if(saved&&typeof saved==='object'&&!Array.isArray(saved))setDone(saved)}catch{}setReady(true)},[])
  useEffect(()=>{if(ready)try{localStorage.setItem('seogeo-checklist-v1',JSON.stringify(done))}catch{}},[done,ready])
  const count=checks[mode].filter((_,i)=>done[`${mode}-${i}`]).length

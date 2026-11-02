@@ -1,4 +1,5 @@
 import {renderToString} from 'react-dom/server'
 import App from './App'
-import type {Mode} from './content'
-export function render(mode:Mode='SEO'){return renderToString(<App initialMode={mode}/>)}
+import type {SitePage} from './pages'
+export {pages} from './pages'
+export function render(page:SitePage){return renderToString(<App page={page}/>)}

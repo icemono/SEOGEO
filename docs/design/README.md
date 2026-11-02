@@ -1,7 +1,13 @@
-# SEOGEO design
+# Pixel adventure baseline
 
-The design concept is `learning-concept.png`. White (#ffffff), ink (#202523), forest green (#24694f), sage (#edf4ef), border (#e0e5df). Content width 1120px. System Chinese sans-serif; monospace for technical labels and code. Hero 52px, section titles 28px, body 16px/1.8. Buttons 14px semibold. 8px spacing grid; 8px corner radius. Thin borders, open editorial sections; one workbench with tabs, step rail, lesson, code and action footer. Icons are 20px, 1.7px rounded strokes. No external font or raster production dependency.
+Current direction is the original GitHub pixel quest from commit `6453c00`, as explicitly selected by the user. The white/green documentation redesign was rejected and is superseded.
 
-Hero copy: 让你的作品， / 被搜索，也被理解。 Description: 写得出代码，也能让用户找到你。从零理解 SEO、ASO 和 GEO，把原理变成下一次提交。 Navigation: 交互学习 / 概念速查 / 上线清单 / GitHub. Buttons: 开始交互学习 / 查看上线清单.
+- Navy #151d38, yellow #ffdc4c; blue SEO sky, purple ASO sky and teal GEO sky.
+- Original CSS robot, cloud silhouettes, coins, hills, brick blocks, pipe and tiled ground.
+- Chinese display: ZCOOL KuaiLe; English pixel labels: Press Start 2P; normal system sans for explanations.
+- Homepage: one large world scene, three topic cartridges, a practical next-step section and short FAQ.
+- Dedicated `/demo/`: preserve the original three-topic, eight-step game. Refinements are scoped to isolation, clarity, keyboard behavior and mobile layout.
+- `/learn/*/`: longer explanations and developer checklists outside the playfield, using the same pixel identity.
+- Desktop scene remains readable without side panels covering the middle. Mobile confines horizontal scrolling to the stage map and keeps the active block visible.
 
-Responsive: desktop rail + lesson; mobile horizontal scrollable steps + stacked lesson, wrap nav, scrollable comparison table. Motion respects reduced-motion. Interactive demo is explicitly simulated. Supporting sections use comparison table, checklist, FAQ and source list. Intentional adaptations: avoid implying guaranteed crawler entry via hero pipeline; use qualified diagram labels. Include optional ASO learning as retained original scope. No fake rank scores.
+No new raster concept art substitutes for the existing code-native pixel system. The visual reference is the original source itself; compare the stage composition, palette, sprites, block styling and HUD against that commit. Browser evidence is saved locally under `output/playwright/`.
