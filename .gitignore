@@ -19,3 +19,10 @@ logs/
 # beside it.
 /.plugins/
 /.opencode-skills/
+
+# Local Cloudflare state and review screenshots
+.wrangler/
+dist-server/
+output/playwright/
+# Generated design reference screenshots stay local; production assets are tracked.
+docs/design/*.png

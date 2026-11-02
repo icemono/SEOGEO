@@ -1,0 +1,12 @@
+import {useEffect,useState} from 'react'
+import {checks,courses,type Mode} from './content'
+import {ModeTabs} from './Workbench'
+import {Icon} from './icons'
+export function Checklist(){
+ const [mode,setMode]=useState<Mode>('SEO'),[done,setDone]=useState<Record<string,boolean>>({}),[ready,setReady]=useState(false),[message,setMessage]=useState('')
+ useEffect(()=>{try{const saved=JSON.parse(localStorage.getItem('seogeo-checklist-v1')||'{}');if(saved&&typeof saved==='object'&&!Array.isArray(saved))setDone(saved)}catch{}setReady(true)},[])
+ useEffect(()=>{if(ready)try{localStorage.setItem('seogeo-checklist-v1',JSON.stringify(done))}catch{}},[done,ready])
+ const count=checks[mode].filter((_,i)=>done[`${mode}-${i}`]).length
+ async function copy(){const text=`# ${mode} 上线清单\n\n`+checks[mode].map((c,i)=>`- [${done[`${mode}-${i}`]?'x':' '}] ${c.title}\n  ${c.detail}`).join('\n')+'\n\n来源：https://seogeo.dev/#checklist';try{await navigator.clipboard.writeText(text);setMessage('清单已复制')}catch{const blob=new Blob([text],{type:'text/markdown;charset=utf-8'});const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download=`${mode.toLowerCase()}-checklist.md`;a.click();URL.revokeObjectURL(url);setMessage('已下载 Markdown 清单')}}
+ return <div className="checklist"><div className="checklist-top"><ModeTabs mode={mode} onChange={m=>{setMode(m);setMessage('')}} label="选择上线清单"/><span className="check-progress" aria-live="polite">{count}<span> / 6 已完成</span></span></div><div className="progress-track"><div className={`progress-${count}`}/></div><fieldset><legend className="sr-only">{mode} {courses[mode].name}上线检查</legend>{checks[mode].map((item,i)=><label className={`check-row ${done[`${mode}-${i}`]?'is-done':''}`} key={`${mode}-${i}`}><input type="checkbox" checked={!!done[`${mode}-${i}`]} onChange={e=>setDone(d=>({...d,[`${mode}-${i}`]:e.target.checked}))}/><span><strong>{item.title}</strong><span>{item.detail}</span></span><small>{item.tag}</small></label>)}</fieldset><div className="checklist-bottom"><button className="button secondary" onClick={copy}><Icon name="copy" size={17}/>复制 Markdown 清单</button><span role="status">{message}</span><button className="text-button" disabled={count===0} onClick={()=>{setDone(d=>{const n={...d};checks[mode].forEach((_,i)=>delete n[`${mode}-${i}`]);return n});setMessage('当前清单已重置')}}>重置当前清单</button></div></div>
+}

@@ -1,0 +1,15 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "seogeo",
+  "account_id": "c8cbb95800306ac784f37df72dfc8bdd",
+  "compatibility_date": "2026-11-02",
+  "assets": {
+    "directory": "./dist",
+    "html_handling": "auto-trailing-slash",
+    "not_found_handling": "404-page"
+  },
+  "routes": [
+    { "pattern": "seogeo.dev", "custom_domain": true },
+    { "pattern": "www.seogeo.dev", "custom_domain": true }
+  ]
+}
