@@ -17,7 +17,7 @@ const journeys: Record<Mode, Journey> = {
     name: '搜索引擎大冒险', subtitle: '网页先进入索引库，才有机会响应用户搜索。',
     phase1: '搜索前建库', phase2: '用户查询', queryLabel: '搜索关键词',
     defaultQuery: '如何学习 SEO', placeholder: '输入你想搜索的问题…',
-    resultMeta: 'devnotes.cn › guides › seo',
+    resultMeta: 'example.com › guides › seo · 模拟示例',
     resultTitle: (query) => `${query}｜新手完整指南`,
     resultText: '搜索引擎可能根据查询动态生成标题与摘要。',
     levels: [
@@ -46,11 +46,11 @@ const journeys: Record<Mode, Journey> = {
       { label: '搜索', title: '用户发起搜索', description: '用户输入需求，所在地区、设备与商店环境共同形成查询上下文。', code: 'query = userInput' },
       { label: '匹配', title: '召回相关应用', description: '商店从应用库中找出元数据、类别等与查询相关的候选应用。', code: 'match(catalog, query)' },
       { label: '排序', title: '计算展示顺序', description: '文本相关性和用户行为等信号可能影响排序；各平台的具体机制并未完全公开。', code: 'rank(apps, market, device)' },
-      { label: '转化', title: '用户查看并安装', description: '图标、截图、文案、评分与本地化共同影响页面访问到安装的转化。', code: 'impression → pageView → install' },
+      { label: '转化', title: '用户选择下载', description: '用户可以从搜索结果直接下载，也可以先看详情；图标、截图、文案和评分会影响选择。', code: 'impression → productPage? → download' },
     ],
   },
   GEO: {
-    name: '生成式搜索大冒险', subtitle: '让内容更易被理解、检索和可信引用，而非操控答案。',
+    name: '生成式搜索大冒险', subtitle: '以启用联网检索的 AI 搜索为例，理解答案与引用。',
     phase1: '内容与证据', phase2: '提问与生成', queryLabel: '用户提示词',
     defaultQuery: 'GEO 和 SEO 有什么区别', placeholder: '输入想问 AI 的问题…',
     resultMeta: 'AI GENERATED ANSWER · SOURCES',
@@ -70,8 +70,8 @@ const journeys: Record<Mode, Journey> = {
 }
 
 const glossary: Record<Mode, Array<[string, string]>> = {
-  SEO: [['可抓取','爬虫能够访问并读取页面。'],['Sitemap','列出重要 URL、帮助发现页面的文件。'],['渲染','执行资源与 JavaScript，得到可见内容。'],['规范 URL','重复页面中被指定为主要版本的 URL。'],['查询','用户提交的问题或关键词。'],['召回','从索引中筛选候选结果的过程。'],['查询场景','地区、语言、设备与时效需求等上下文。'],['动态摘要','根据具体查询选取或生成的结果说明。']],
-  ASO: [['留存','安装后仍持续使用产品的用户比例。'],['元数据','名称、描述、关键词、分类等商店信息。'],['审核','商店对功能、政策、安全与隐私的检查。'],['索引字段','商店用于理解和匹配应用的文本字段。'],['查询上下文','用户地区、语言、设备和商店版本。'],['候选应用','初步匹配、等待进一步排序的应用集合。'],['转化','从看到应用，到访问详情并安装的过程。'],['本地化','针对不同语言和市场调整素材。']],
+  SEO: [['可抓取','爬虫能够访问并读取页面。'],['Sitemap','列出重要 URL、帮助发现页面的文件。'],['渲染','执行资源与 JavaScript，得到可见内容。'],['规范 URL','重复内容中被搜索系统选为代表的 URL；站长可以建议。'],['查询','用户提交的问题或关键词。'],['召回','从索引中筛选候选结果的过程。'],['查询场景','地区、语言、设备与时效需求等上下文。'],['动态摘要','根据具体查询选取或生成的结果说明。']],
+  ASO: [['留存','安装后仍持续使用产品的用户比例。'],['元数据','名称、描述、关键词、分类等商店信息。'],['审核','商店对功能、政策、安全与隐私的检查。'],['索引字段','商店用于理解和匹配应用的文本字段。'],['查询上下文','用户地区、语言、设备和商店版本。'],['候选应用','初步匹配、等待进一步排序的应用集合。'],['转化','从看到应用到完成下载等目标行为；不一定经过详情页。'],['本地化','针对不同语言和市场调整素材。']],
   GEO: [['用户意图','用户真正希望完成的任务或获得的信息。'],['原创信息','独立提供的数据、经验、研究或观点。'],['实体','可明确识别的人、组织、产品或概念。'],['可索引','内容有机会进入可检索的数据集合。'],['提示词','用户提交的指令、问题与上下文。'],['检索增强','生成答案前查找外部资料并交给模型。'],['概率性','相同问题可能产生不同且不一定正确的结果。'],['引用','答案中标明信息出处的链接或说明。']],
 }
 
@@ -210,7 +210,7 @@ export default function Demo({initialMode='SEO'}:{initialMode?:Mode}) {
         </footer>
       </section>
     </main>
-    <div className="demo-after page-width"><p>这是本地原理演示，不会发起真实搜索或调用 AI。</p><a href={`/learn/${mode.toLowerCase()}/`}>阅读 {mode} 实操指南与上线清单 →</a></div>
+    <div className="demo-after page-width"><p>八关是简化教学路径；抓取、收录和引用都不保证发生。</p><a href={`/learn/${mode.toLowerCase()}/`}>阅读 {mode} 实操指南与上线清单 →</a></div>
     <SiteFooter/>
     </>
   )

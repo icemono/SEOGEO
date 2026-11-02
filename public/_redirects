@@ -1,0 +1,4 @@
+# Consolidate the duplicate SEO demo into the main demonstration URL.
+/demo/seo /demo/ 301
+/demo/seo/ /demo/ 301
+/demo/seo/index.html /demo/ 301

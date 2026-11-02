@@ -25,6 +25,7 @@ Teach SEO, ASO and GEO to developers with no prior search-marketing knowledge. E
 - `src/entry-server.tsx`, `src/main.tsx`: SSR and client hydration. Initial render must match on both sides.
 - `scripts/prerender.mjs`: full static HTML, route metadata/schema, CSP hashes and sitemap.
 - `scripts/check-build.mjs`: verifies generated publication output.
+- `public/_redirects`: redirects the duplicate `/demo/seo/` entry to canonical `/demo/`. Exclude that alias from the generated sitemap.
 - `public/_headers`: security/cache template. Inline JSON-LD CSP hashes are injected during the build.
 - `wrangler.jsonc`: Worker name, account, assets and custom domains.
 
@@ -36,4 +37,4 @@ The user explicitly rejected the white/green documentation-workbench redesign. P
 
 ## Operational boundaries
 
-Canonical host: https://seogeo.dev/. Cloudflare zone redirect sends www to the canonical host while retaining path/query. The user explicitly paused Google Search submission. A TXT verification record exists, but ownership verification, Sitemap submission and indexing requests must not be performed until the user resumes that work. A deployment or sitemap submission is not evidence of indexing. Git build validation is not automatic production deployment. See README and docs/validation.md for the current verified boundary.
+Canonical host: https://seogeo.dev/. Cloudflare zone redirect sends www to the canonical host while retaining path/query. The user will manually verify and submit Google Search. A TXT verification record exists. Prepare the site and SEO, but do not verify ownership, submit a Sitemap or request indexing through the user account without a new explicit instruction. A deployment or sitemap submission is not evidence of indexing. Git build validation is not automatic production deployment. See README and docs/validation.md for the current verified boundary.

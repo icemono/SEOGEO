@@ -33,3 +33,13 @@ Cloudflare Workers static hosting remains the deployment target. The canonical w
 Git automatic production deployment is not configured. Publish with the documented Wrangler command using the existing login. No API tokens or additional GitHub permissions were created for CI.
 
 Final browser checks also confirmed automatic playback pauses at stage 5 for user input, mobile active-stage visibility, keyboard topic switching, guide navigation and checklist persistence after reload. Production `/demo/` loaded over HTTPS; a custom GEO question reached the result panel, with no console errors or warnings in the checked flow. Final desktop scene was checked at 1280×900; mobile page widths of 389px and 358px showed no page-wide overflow.
+
+## Lightweight concept correction and SEO preparation
+
+At the user's request, only a few teaching phrases changed: ASO's product-page visit is optional before download; GEO is explicitly scoped to retrieval-enabled AI search; canonical selection is a search-system decision with site-owner suggestions; the eight stages are labelled a simplified teaching path. Pixel artwork, CSS and layout were unchanged.
+
+SEO changes: keyword-specific homepage/demo titles and summaries, complete social-image metadata, a consistent WebSite identity and WebPage/LearningResource graph, two-level breadcrumbs matching home/lesson navigation, and permanent redirects from `/demo/seo[/]` to `/demo/`. Internal links and canonical URLs use the preferred URL. Sitemap has seven canonical URLs; the alias is excluded. Static HTML, robots allowance, CSP hashes, local assets and real 404 behavior remain checked. Removed the stale source sitemap; the deployed XML is generated from `src/pages.ts`.
+
+`npm run check` passed all build and publication-output checks. Google account verification, Sitemap submission and indexing requests remain for the user to perform manually.
+
+Live checks after this SEO release: all seven Sitemap URLs returned 200 with matching canonical/schema URLs, one H1 and valid CSP hashes. The duplicate SEO demo returned 301 (including the old index.html URL), retaining query parameters. www retained its canonical redirect; robots.txt allowed crawling and declared the Sitemap; missing URL returned 404. The zone's Always Use HTTPS setting was enabled to consolidate the HTTP variant into HTTPS.
