@@ -5,6 +5,11 @@ const routes=['','demo/','demo/seo/','demo/aso/','demo/geo/','learn/seo/','learn
 const sitemap=await readFile('dist/sitemap.xml','utf8')
 const headers=await readFile('dist/_headers','utf8')
 const descriptions=new Set()
+for(const directive of ['script-src','connect-src']){
+ const policy=headers.match(new RegExp(`${directive} ([^;]+);`))?.[1]
+ assert.ok(policy?.includes('https://analytics.ahrefs.com'),`${directive}: Ahrefs allowed by CSP`)
+ assert.ok(!policy.includes("'unsafe-inline'"),`${directive}: inline execution remains restricted`)
+}
 for(const route of routes){
  const html=await readFile(`dist/${route}index.html`,'utf8')
  const head=html.match(/<head>([\s\S]*?)<\/head>/)?.[1]
@@ -12,6 +17,10 @@ for(const route of routes){
  const canonicalRoute=route==='demo/seo/'?'demo/':route
  const expected=`https://seogeo.dev/${canonicalRoute}`
  assert.ok(head&&body,`${route}: complete HTML document`)
+ const trackers=[...head.matchAll(/<script\b[^>]*src="https:\/\/analytics\.ahrefs\.com\/analytics\.js"[^>]*><\/script>/g)]
+ assert.equal(trackers.length,1,`${route}: exactly one Ahrefs tracker in head`)
+ assert.ok(trackers[0][0].includes('data-key="eWBuH3vI2CZUOwDPgt91vw"'),`${route}: correct Ahrefs project`)
+ assert.ok(/\basync(?:\s|>)/.test(trackers[0][0]),`${route}: non-blocking tracker`)
  assert.equal((body.match(/<h1(?:\s[^>]*)?>/g)||[]).length,1,`${route}: one H1`)
  assert.equal((head.match(/rel="canonical"/g)||[]).length,1,`${route}: one canonical`)
  assert.ok(head.includes(`rel="canonical" href="${expected}"`),`${route}: canonical`)

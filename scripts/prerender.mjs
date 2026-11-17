@@ -30,7 +30,7 @@ for(const page of pages){
  await mkdir(`dist/${path}`,{recursive:true});await writeFile(`dist/${path?path+'/':''}index.html`,html)
 }
 const headers=await readFile('public/_headers','utf8')
-await writeFile('dist/_headers',headers.replace('script-src \'self\';',`script-src 'self' ${[...hashes].join(' ')};`))
+await writeFile('dist/_headers',headers.replace(/script-src 'self'(?=;| )/,`script-src 'self' ${[...hashes].join(' ')}`))
 await writeFile('dist/sitemap.xml',`<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${pages.filter(p=>p.sitemap!==false).map(p=>`  <url><loc>${base}${p.path?p.path+'/':''}</loc></url>`).join('\n')}\n</urlset>\n`)
 await rm('dist-server',{recursive:true,force:true})
 console.log(`Prerendered ${pages.length} pages; sitemap contains ${pages.filter(p=>p.sitemap!==false).length} canonical URLs.`)

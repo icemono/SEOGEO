@@ -26,7 +26,7 @@ Teach SEO, ASO and GEO to developers with no prior search-marketing knowledge. E
 - `scripts/prerender.mjs`: full static HTML, route metadata/schema, CSP hashes and sitemap.
 - `scripts/check-build.mjs`: verifies generated publication output.
 - `public/_redirects`: redirects the duplicate `/demo/seo/` entry to canonical `/demo/`. Exclude that alias from the generated sitemap.
-- `public/_headers`: security/cache template. Inline JSON-LD CSP hashes are injected during the build.
+- `public/_headers`: security/cache template. Inline JSON-LD CSP hashes are injected during the build. Ahrefs Web Analytics is the authorized external script; preserve its exact project snippet in `index.html` and its script/connect CSP origin. Do not transmit demo input or checklist content in custom events.
 - `wrangler.jsonc`: Worker name, account, assets and custom domains.
 
 ## Visual baseline

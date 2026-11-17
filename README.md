@@ -44,4 +44,10 @@ Cloudflare Workers 静态托管，配置位于 `wrangler.jsonc`。当前使用�
 - `scripts/prerender.mjs`：生成正文 HTML、JSON-LD、CSP hashes 与 Sitemap。
 - `scripts/check-build.mjs`：检查最终发布文件。
 
-Press Start 2P 与 ZCOOL KuaiLe 来自 Google Fonts，按 OFL 授权本地托管；授权文件见 `public/fonts/`。仅本地保存清单，不加载外部字体、分析或 AI 脚本。
+Press Start 2P 与 ZCOOL KuaiLe 来自 Google Fonts，按 OFL 授权本地托管；授权文件见 `public/fonts/`。清单内容仅保存在本地；使用 Ahrefs Web Analytics 统计访问，不加载外部字体或 AI 脚本。
+
+## 访问统计
+
+已按 Ahrefs 项目 Seogeo（10718230）的安装设置，将官方异步片段放入全站 `<head>`；公开的数据标识为 `eWBuH3vI2CZUOwDPgt91vw`，不是账号凭据。CSP 的 `script-src` 与 `connect-src` 仅额外放行 `https://analytics.ahrefs.com`，并保留构建生成的 JSON-LD hashes。
+
+使用官方默认访问/交互统计，没有添加自定义事件或表单字段采集。演示输入与清单内容不作为统计数据传入。官方脚本会忽略 localhost 和 127.0.0.1 的事件。安装状态可在项目的 Web Analytics 设置中点击“验证安装”检查。
